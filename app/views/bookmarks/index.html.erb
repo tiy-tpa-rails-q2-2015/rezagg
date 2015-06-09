@@ -1,7 +1,19 @@
 <div class="page-header">
-  <%= link_to new_bookmark_path, class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-plus"></span>
-    New Bookmark
+  <% if current_user %>
+    <%= link_to new_bookmark_path, class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-plus"></span>
+      New Bookmark
+    <% end %>
+
+    <% unless params[:mine] %>
+      <%= link_to bookmarks_path(mine: true), class: 'btn btn-default' do %>
+        Mine
+      <% end %>
+    <% else %>
+      <%= link_to bookmarks_path, class: 'btn btn-default' do %>
+        All
+      <% end %>
+    <% end %>
   <% end %>
   <h1>Listing Bookmarks</h1>
 </div>
@@ -15,19 +27,26 @@
         <th>Title</th>
         <th>Description</th>
         <th></th>
-        <th></th>
-        <th></th>
+        <% if current_user %>
+          <th></th>
+          <th></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
       <%= content_tag_for(:tr, @bookmarks) do |bookmark| %>
-        <td><%= bookmark.user %></td>
+        <td><%= bookmark.user.try(:name) %></td>
         <td><%= bookmark.url %></td>
         <td><%= bookmark.title %></td>
         <td><%= bookmark.description %></td>
         <td><%= link_to 'Show', bookmark %></td>
-        <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
-        <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user && bookmark.user == current_user %>
+          <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
+          <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+          <td></td>
+          <td></td>
+        <% end %>
       <% end %>
     </tbody>
   </table>

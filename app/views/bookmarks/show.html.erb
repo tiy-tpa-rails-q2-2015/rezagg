@@ -3,16 +3,18 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-  <%= link_to edit_bookmark_path(@bookmark), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Edit
+  <% if current_user %>
+    <%= link_to edit_bookmark_path(@bookmark), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit
+    <% end %>
   <% end %>
   <h1>Show Bookmark</h1>
 </div>
 
 <dl class="dl-horizontal">
   <dt>User:</dt>
-  <dd><%= @bookmark.user %></dd>
+  <dd><%= @bookmark.user.try(:name) %></dd>
 
   <dt>Url:</dt>
   <dd><%= @bookmark.url %></dd>
