@@ -1,6 +1,9 @@
-<h1>Editing Bookmark</h1>
+<div class="page-header">
+  <%= link_to bookmarks_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <h1>Editing Bookmark</h1>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @bookmark %> |
-<%= link_to 'Back', bookmarks_path %>

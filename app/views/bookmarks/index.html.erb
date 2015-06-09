@@ -1,21 +1,26 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <%= link_to new_bookmark_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Bookmark
+  <% end %>
+  <h1>Listing Bookmarks</h1>
+</div>
 
-<h1>Listing Bookmarks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Url</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bookmarks.each do |bookmark| %>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
       <tr>
+        <th>User</th>
+        <th>Url</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= content_tag_for(:tr, @bookmarks) do |bookmark| %>
         <td><%= bookmark.user %></td>
         <td><%= bookmark.url %></td>
         <td><%= bookmark.title %></td>
@@ -23,11 +28,8 @@
         <td><%= link_to 'Show', bookmark %></td>
         <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
         <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<br>
-
-<%= link_to 'New Bookmark', new_bookmark_path %>

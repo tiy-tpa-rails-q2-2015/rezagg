@@ -1,24 +1,25 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <%= link_to bookmarks_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_bookmark_path(@bookmark), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show Bookmark</h1>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @bookmark.user %>
-</p>
+<dl class="dl-horizontal">
+  <dt>User:</dt>
+  <dd><%= @bookmark.user %></dd>
 
-<p>
-  <strong>Url:</strong>
-  <%= @bookmark.url %>
-</p>
+  <dt>Url:</dt>
+  <dd><%= @bookmark.url %></dd>
 
-<p>
-  <strong>Title:</strong>
-  <%= @bookmark.title %>
-</p>
+  <dt>Title:</dt>
+  <dd><%= @bookmark.title %></dd>
 
-<p>
-  <strong>Description:</strong>
-  <%= @bookmark.description %>
-</p>
-
-<%= link_to 'Edit', edit_bookmark_path(@bookmark) %> |
-<%= link_to 'Back', bookmarks_path %>
+  <dt>Description:</dt>
+  <dd><%= @bookmark.description %></dd>
+</dl>
