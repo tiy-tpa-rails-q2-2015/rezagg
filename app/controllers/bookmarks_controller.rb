@@ -52,6 +52,20 @@ class BookmarksController < ApplicationController
     redirect_to bookmarks_url, notice: 'Bookmark was successfully destroyed.'
   end
 
+  # PUT /bookmarks/1/favorite
+  def favorite
+    @bookmark = Bookmark.find(params[:id])
+    current_user.favorite_bookmarks << @bookmark
+    redirect_to bookmarks_url, notice: 'Favorite was successfully created.'
+  end
+
+  # DELETE /bookmarks/1/favorite
+  def unfavorite
+    @bookmark = Bookmark.find(params[:id])
+    current_user.favorite_bookmarks.delete(@bookmark)
+    redirect_to bookmarks_url, notice: 'Favorite was successfully removed.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bookmark

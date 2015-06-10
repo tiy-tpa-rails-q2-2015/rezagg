@@ -30,6 +30,7 @@
         <% if current_user %>
           <th></th>
           <th></th>
+          <th>Fav?</th>
         <% end %>
       </tr>
     </thead>
@@ -40,12 +41,25 @@
         <td><%= bookmark.title %></td>
         <td><%= bookmark.description %></td>
         <td><%= link_to 'Show', bookmark %></td>
-        <% if current_user && bookmark.user == current_user %>
-          <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
-          <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% else %>
-          <td></td>
-          <td></td>
+        <% if current_user %>
+          <% if bookmark.user == current_user %>
+            <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
+            <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% else %>
+            <td></td>
+            <td></td>
+          <% end %>
+          <td>
+            <% if current_user.favorite_bookmarks.include?(bookmark) %>
+              <%= link_to favorite_bookmark_path(bookmark), method: 'delete' do %>
+                <span class="glyphicon glyphicon-heart"></span>
+              <% end %>
+            <% else %>
+              <%= link_to favorite_bookmark_path(bookmark), method: 'put' do %>
+                <span class="glyphicon glyphicon-heart-empty"></span>
+              <% end %>
+            <% end %>
+          </td>
         <% end %>
       <% end %>
     </tbody>
