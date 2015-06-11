@@ -1,7 +1,7 @@
 class BookmarksController < ApplicationController
   before_action :set_bookmark, only: [:edit, :update, :destroy]
 
-  before_action :require_authenticated_user, :except => [:index, :show]
+  before_action :authenticate_user!, :except => [:index, :show]
 
   # GET /bookmarks
   def index

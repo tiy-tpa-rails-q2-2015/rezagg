@@ -25,22 +25,13 @@
         <a class="navbar-brand" href="<%= root_path %>">Resource Aggregator</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <% unless current_user %>
-        <form action="<%= session_path %>" method="POST" class="navbar-form navbar-right">
-          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-          <div class="form-group">
-            <input type="email" name="email" placeholder="Email" class="form-control">
-          </div>
-          <div class="form-group">
-            <input type="password" name="password" placeholder="Password" class="form-control">
-          </div>
-          <button type="submit" class="btn btn-success">Sign in</button>
-        </form>
+        <% unless current_user %>		
+			<%= link_to "Sign In", new_user_session_path, :class => "btn btn-default navbar-right" %>
         <% else %>
-          <form action="<%= session_path %>" method="POST" class="navbar-form navbar-right">
+          <form action="<%= destroy_user_session_path %>" method="POST" class="navbar-form navbar-right">
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
             <input name="_method" type="hidden" value="delete" />
-            <button type="submit" class="btn btn-default">Log Out as <%= current_user.name %></button>
+            <button type="submit" class="btn btn-default">Log Out as <%= current_user.email %></button>
           </form>
         <% end %>
       </div><!--/.navbar-collapse -->
@@ -48,7 +39,10 @@
   </nav>
 
   <div class="container">
-    <div><%= flash[:notice] %></div>
+    <div>
+		<%= notice %>
+		<%= alert %>
+	</div>
     <%= yield %>
   </div> <!-- /container -->
 
