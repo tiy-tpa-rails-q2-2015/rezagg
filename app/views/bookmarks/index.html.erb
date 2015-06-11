@@ -23,7 +23,6 @@
     <thead>
       <tr>
         <th>User</th>
-        <th>Url</th>
         <th>Title</th>
         <th>Description</th>
         <th></th>
@@ -36,15 +35,26 @@
     </thead>
     <tbody>
       <%= content_tag_for(:tr, @bookmarks) do |bookmark| %>
-        <td><%= bookmark.user.try(:name) %></td>
-        <td><%= bookmark.url %></td>
-        <td><%= bookmark.title %></td>
-        <td><%= bookmark.description %></td>
-        <td><%= link_to 'Show', bookmark %></td>
+        <td><%= bookmark.user.try(:email) %></td>
+        <td><%= link_to truncate(bookmark.title, length: 120), bookmark.url %></td>
+        <td><%= truncate bookmark.description, length: 120, separator: ' ' %></td>
+        <td>
+          <%= link_to bookmark do %>
+            <span class="glyphicon glyphicon-eye-open"></span>
+          <% end %>
+        </td>
         <% if current_user %>
           <% if bookmark.user == current_user %>
-            <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
-            <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+              <%= link_to edit_bookmark_path(bookmark) do %>
+                <span class="glyphicon glyphicon-pencil"></span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to bookmark, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <span class="glyphicon glyphicon-trash"></span>
+              <% end %>
+            </td>
           <% else %>
             <td></td>
             <td></td>
@@ -64,5 +74,8 @@
       <% end %>
     </tbody>
   </table>
+  
+  <%= paginate @bookmarks %>
+  
 </div>
 

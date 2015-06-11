@@ -15,6 +15,7 @@ gem 'turbolinks'
 gem 'bootstrap-sass'
 
 gem 'devise'
+gem 'kaminari'
 
 group :development, :test do
   gem 'byebug'

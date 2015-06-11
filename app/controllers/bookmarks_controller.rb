@@ -8,7 +8,7 @@ class BookmarksController < ApplicationController
     if params[:mine]
       @bookmarks = current_user.try(:bookmarks)
     else
-      @bookmarks = Bookmark.all
+      @bookmarks = Bookmark.page(params[:page]).per(3)
     end
   end
 
