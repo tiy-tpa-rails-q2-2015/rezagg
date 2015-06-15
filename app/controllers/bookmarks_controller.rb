@@ -1,12 +1,11 @@
 class BookmarksController < ApplicationController
   before_action :set_bookmark, only: [:edit, :update, :destroy]
-
   before_action :authenticate_user!, :except => [:index, :show]
 
   # GET /bookmarks
   def index
-    if params[:mine]
-      @bookmarks = current_user.try(:bookmarks)
+    if params[:mine] && current_user
+      @bookmarks = current_user.bookmarks.page(params[:page])
     else
       @bookmarks = Bookmark.page(params[:page])
     end
