@@ -31,7 +31,7 @@
           <form action="<%= destroy_user_session_path %>" method="POST" class="navbar-form navbar-right">
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
             <input name="_method" type="hidden" value="delete" />
-            <button type="submit" class="btn btn-default">Log Out as <%= current_user.email %></button>
+            <button type="submit" class="btn btn-default">Log Out as <%= current_user.display_name %></button>
           </form>
         <% end %>
       </div><!--/.navbar-collapse -->

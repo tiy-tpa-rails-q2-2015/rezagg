@@ -8,4 +8,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  def display_name
+    name.blank? ? email : name
+  end
 end

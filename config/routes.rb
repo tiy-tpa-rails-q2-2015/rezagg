@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {
+    :registrations => "registrations"
+  }
 
   resources :bookmarks do
     delete 'favorite', :on => :member, :action => 'unfavorite'
