@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615142557) do
+ActiveRecord::Schema.define(version: 20150701162041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,14 +28,15 @@ ActiveRecord::Schema.define(version: 20150615142557) do
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "bookmark_id"
+    t.integer  "commentable_id"
     t.integer  "user_id"
     t.text     "body"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "commentable_type"
   end
 
-  add_index "comments", ["bookmark_id"], name: "index_comments_on_bookmark_id", using: :btree
+  add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "favorites", force: :cascade do |t|
@@ -47,6 +48,14 @@ ActiveRecord::Schema.define(version: 20150615142557) do
 
   add_index "favorites", ["bookmark_id"], name: "index_favorites_on_bookmark_id", using: :btree
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -78,7 +87,7 @@ ActiveRecord::Schema.define(version: 20150615142557) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   add_foreign_key "bookmarks", "users"
-  add_foreign_key "comments", "bookmarks"
+  add_foreign_key "comments", "bookmarks", column: "commentable_id"
   add_foreign_key "comments", "users"
   add_foreign_key "favorites", "bookmarks"
   add_foreign_key "favorites", "users"
